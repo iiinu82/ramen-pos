@@ -1,0 +1,619 @@
+body {
+  margin: 0;
+  background-color: #f0f2f5; /* PCで見たときの背景をグレーにして、中央のスマホを引き立たせる */
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobileContainer {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.header {
+  position: relative;
+}
+
+.title {
+  margin-top: 24px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+/* タブエリア */
+.tabArea {
+  display: flex;
+  gap: 6px;
+  padding: 8px 8px;
+  background: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  overflow-x: auto;
+  margin-top: 15px;
+}
+.tabBtn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #ddd;
+  color: #333;
+}
+
+.tabBtnActive {
+  background-color: #ff4500;
+  color: #fff;
+}
+
+.menuArea {
+  padding: 24px;
+  margin-bottom: 60px;
+}
+
+.cardArea {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.card {
+  background-color: #ffffff;
+
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  padding: 0px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+  cursor: pointer;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #ff4500;
+}
+.thumbnail {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background-color: #f5f5f5;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+/* メニューのタイトル */
+.menuTitle {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12px;
+  flex-grow: 1;
+}
+
+/* カートに入れるボタン */
+.addCart {
+  width: 100%;
+  background-color: #10b454;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #0d8c42;
+  transition: all 0.1s ease;
+}
+
+.addCart:active {
+  background-color: #0e9e49;
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #0d8c42;
+  opacity: 0.9;
+}
+
+.footerArea {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  padding: 10px 20px;
+  background-color: #ff0101;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.footerArea p {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.footerArea p span {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.proceedCheckout {
+  width: 120px;
+  background-color: #f6ea00;
+  color: #4d4d4d;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 0;
+  font-size: 16px;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.proceedCheckout:active {
+  opacity: 0.8; /* タップしたときのフィードバック */
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+
+/* 確認画面 */
+h2 {
+  margin-top: 20px;
+  text-align: center;
+}
+.confirmOrder {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* max-height: 50vh; */
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding: 15px;
+}
+.confirmCard {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+.confirmThumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.confirmItemInfo {
+  flex: 1;
+}
+
+.confirmMenuTitle {
+  font-weight: bold;
+  font-size: 15px;
+  color: #333;
+}
+
+.confirmOptions {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.confirmQuantity {
+  font-size: 14px;
+  color: #444;
+  margin-top: 4px;
+}
+
+.confirmItemTotal {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+.totalAmountBox {
+  margin: 16px 15px;
+  padding: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.totalAmountPrice {
+  color: #ff4500;
+}
+
+.confirmBtnArea {
+  display: flex;
+  gap: 12px;
+  margin: 15px;
+}
+.confirmBackBtn {
+  flex: 1;
+  padding: 12px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.confirmCheckoutBtn {
+  flex: 1;
+  padding: 12px;
+  background-color: #ff4500;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.confirmCheckoutBtn:hover {
+  background-color: #e03d00;
+}
+
+/* --- 注文確認画面の数量変更エリア用スタイル --- */
+
+.quantityControlArea {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 6px;
+}
+
+.decreaseBtn {
+  padding: 0 5px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff8f8;
+  border: 1px solid #ff2e2e;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  color: #616161;
+  user-select: none;
+  transition: transform 0.05s ease;
+}
+.decreaseBtn:active {
+  background-color: #ff2e2e;
+  color: #ffffff;
+  transform: scale(0.9);
+}
+.quantityText {
+  font-size: 14px;
+  color: #444;
+  font-weight: bold;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------
+ */
+
+/* 注文完了画面 */
+.orderNumContainer {
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  flex-direction: column;
+  padding: 80px 30px;
+}
+.orderNumDesc {
+  font-size: 20px;
+}
+.orderNum {
+  font-size: 50px;
+  margin-bottom: 50px;
+}
+.orderText {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+/* 履歴ボタンを押した時のモーダル  */
+.historyOpenBtn {
+  position: absolute;
+  right: 5px;
+  top: 28px;
+  background-color: #4b5563;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.historyModalContent {
+  background-color: #fff;
+  width: 90%;
+  max-width: 360px;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.historyModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.historyModalTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #505050;
+}
+
+.historyModalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.historyCard {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.historyNum {
+  font-size: 18px;
+  font-weight: bold;
+  color: #10b454;
+}
+
+.historyTime {
+  font-size: 12px;
+  color: #666;
+}
+
+.noHistory {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+/* 個別商品モーダル */
+/* --- 商品オプション選択モーダル用スタイル --- */
+
+.modalContent {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 400px;
+  max-height: 92vh;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+}
+
+.modalBody {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modalThumbnail {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.modalBasePrice {
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.optionGroupSection {
+  margin-bottom: 16px;
+}
+
+.optionGroupTitle {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+  color: #444;
+}
+
+.optionButtonContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 通常時のオプションボタン */
+.optionBtn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* 選択された時のオプションボタン */
+.optionBtnSelected {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 2px solid #ff4800;
+  background-color: #fff5ee;
+  color: #ff4500;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.quantitySection {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+}
+
+.quantityLabel {
+  font-weight: bold;
+  color: #333;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quantityBtn {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.quantityValue {
+  font-size: 18px;
+  font-weight: bold;
+  min-width: 24px;
+  text-align: center;
+}
+
+.modalFooter {
+  padding: 16px;
+  border-top: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+.addToCartModalBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0f5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+}
+
+.addToCartModalBtn:hover {
+  background-color: rgb(0, 201, 67);
+}
+.totalPrice {
+  margin-top: 4px;
+}

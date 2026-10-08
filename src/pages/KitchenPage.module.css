@@ -1,0 +1,334 @@
+.container {
+  padding: 5px 15px;
+  font-family: sans-serif;
+  width: 1330px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #ffffd3;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.orderDisplay {
+  width: 100%;
+  max-height: calc(100% - 60px);
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+.cookArea {
+  flex: 50%;
+  max-height: 100%;
+  background-color: #0aceff;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+}
+
+.cookArea h2,
+.readyArea h2 {
+  margin: 0;
+}
+
+.orderCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px 15px;
+  gap: 10px;
+}
+
+.orderNum {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cardArea {
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menuCard {
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #fef4cb;
+}
+
+.thumbnail {
+  width: 45px;
+  height: 45px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.menuInfo {
+  width: 230px;
+}
+
+.kitchenDisplayString {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.itemQuantity {
+  font-size: 14px;
+  color: #555;
+}
+
+.menuStateBtn {
+  width: 40px;
+
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.menuStateBtn.notReady {
+  background-color: #b7b7b7;
+}
+
+.menuStateBtn.ready {
+  background-color: #ff1b1b;
+}
+
+/* 未完了・準備OKボタン */
+.confirmBtn {
+  flex: 10%;
+  width: 70px;
+  height: 60px;
+  background-color: #b7b7b7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+.confirmBtn.ready {
+  background-color: #2010b4;
+}
+
+/* キャンセルボタン（赤） */
+.cancelBtn {
+  width: 50px;
+  height: 40px;
+  background-color: #fa5d5d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 0;
+  font-size: 9px;
+}
+
+/* 右側のエリア */
+.readyArea {
+  flex: 50%;
+  max-height: 100%;
+  background-color: #ff0f0f;
+  flex-shrink: 0;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+}
+
+.orderInfoArea {
+}
+
+/* 商品の箱 */
+.orderMenuArea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.orderMenuInfo {
+  width: 430px;
+  display: flex;
+  gap: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #fef9e3;
+}
+
+.orderMenuInfo img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* 小計 */
+.totalPrice {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+/* オーダー合計 */
+.orderTotalPrice {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-right: 4px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.orderTotalPriceText {
+  color: #555;
+}
+
+.orderTotalPriceNum {
+  color: #ff4500;
+  font-size: 18px;
+}
+
+.finishBtn {
+  flex: 10%;
+  width: 70px;
+  height: 60px;
+  background-color: #b7b7b7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.finishBtn.finishingRed {
+  background-color: #fe0c0c;
+}
+
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------------
+ */
+
+/* モーダル */
+.historyButton {
+  background-color: #4b5563;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80vh;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.closeButton {
+  background-color: #e5e7eb;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.historyList {
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.historyItem {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.historyMenu {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  margin-right: 5px;
+}
+
+.historyState {
+  text-align: right;
+  width: 80px;
+  flex-shrink: 0;
+}
+.historyBadgeCompleted {
+  background-color: #10b981;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.historyBadgeCancelled {
+  background-color: #ef4444;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}

@@ -1,0 +1,59 @@
+.container {
+  font-family: sans-serif;
+  width: 1000px;
+  height: 400px;
+  background-color: #f8f7ff;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stateTitleArea {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stateTitle {
+  width: 49.5%;
+  font-size: 30px;
+  padding: 0 10px;
+}
+
+.waitTitle {
+  background-color: #8c8c8c;
+  color: #ffffff;
+}
+.okTitle {
+  background-color: #02812a;
+  color: #ffffff;
+}
+
+.orderNumArea {
+  width: 100%;
+  font-size: 34px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  gap: 2%;
+}
+
+.orderNum {
+  width: 49.5%;
+  padding: 0 20px;
+}
+.waitNum p {
+  color: #8c8c8c;
+}
+.okNum p {
+  color: #02812a;
+  font-size: 34px;
+}
+/* .okNum p:last-child {
+  font-size: 50px;
+} */
