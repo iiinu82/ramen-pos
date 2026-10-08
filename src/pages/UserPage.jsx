@@ -4,6 +4,14 @@ import { useSearchParams } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { initialMenus } from "../data/menu";
+import HistoryModal from "../components/HistoryModal";
+
+const TABS = [
+  { id: "all", label: "すべて" },
+  { id: "ramen", label: "ラーメン" },
+  { id: "sub", label: "サブメニュー" },
+  { id: "drink", label: "ドリンク" },
+];
 
 export default function UserPage() {
   const [activeTab, setActiveTab] = useState("all");
@@ -211,19 +219,24 @@ export default function UserPage() {
 
   // カート内の商品の個数を1つ減らす（0になったらカートから削除する）関数
   const handleDecreaseQuantity = (indexToDecrease) => {
-    const updatedCart = [...cart];
-    const targetItem = updatedCart[indexToDecrease];
+    const targetItem = cart[indexToDecrease];
 
     if (targetItem.quantity > 1) {
-      // 2個以上なら、個数を1減らし、それに伴って小計金額（totalPrice）も再計算する
-      const unitPrice = targetItem.totalPrice / targetItem.quantity; // 1個あたりの単価
-      targetItem.quantity -= 1;
-      targetItem.totalPrice = unitPrice * targetItem.quantity;
+      const unitPrice = targetItem.totalPrice / targetItem.quantity;
+      const newQuantity = targetItem.quantity - 1;
+
+      const updatedCart = cart.map((item, index) =>
+        index === indexToDecrease
+          ? {
+              ...item,
+              quantity: newQuantity,
+              totalPrice: unitPrice * newQuantity,
+            }
+          : item,
+      );
       setCart(updatedCart);
     } else {
-      // 1個の状態で減らされたら、カートからその商品自体を削除する
-      updatedCart.splice(indexToDecrease, 1);
-      setCart(updatedCart);
+      setCart(cart.filter((_, index) => index !== indexToDecrease));
     }
   };
 
@@ -246,34 +259,15 @@ export default function UserPage() {
             </div>
             {/* カテゴリタブのボタン群 */}
             <div className={styles.tabArea}>
-              <button
-                className={`${styles.tabBtn} ${activeTab === "all" ? styles.tabBtnActive : ""}`}
-
-                onClick={() => setActiveTab("all")}
-              >
-                すべて
-              </button>
-              <button
-                className={`${styles.tabBtn} ${activeTab === "ramen" ? styles.tabBtnActive : ""}`}
-
-                onClick={() => setActiveTab("ramen")}
-              >
-                ラーメン
-              </button>
-              <button
-                className={`${styles.tabBtn} ${activeTab === "sub" ? styles.tabBtnActive : ""}`}
-
-                onClick={() => setActiveTab("sub")}
-              >
-                サブメニュー
-              </button>
-              <button
-                className={`${styles.tabBtn} ${activeTab === "drink" ? styles.tabBtnActive : ""}`}
-
-                onClick={() => setActiveTab("drink")}
-              >
-                ドリンク
-              </button>
+              {TABS.map((tab) => (
+                <button
+                  key={tab.id}
+                  className={`${styles.tabBtn} ${activeTab === tab.id ? styles.tabBtnActive : ""}`}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
 
             {/* メニューエリア */}
@@ -523,39 +517,10 @@ export default function UserPage() {
 
       {/* 自分の注文履歴モーダル */}
       {isHistoryModalOpen && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.historyModalContent}>
-            <div className={styles.historyModalHeader}>
-              <h3 className={styles.historyModalTitle}>ご自身の注文履歴</h3>
-              <button
-                className={styles.closeBtn}
-                onClick={() => setIsHistoryModalOpen(false)}
-              >
-                ✕
-              </button>
-            </div>
-            <div className={styles.historyModalBody}>
-              {myHistory.length === 0 ? (
-                <p className={styles.noHistory}>過去の注文履歴はありません</p>
-              ) : (
-                myHistory.map((order, index) => (
-                  <div className={styles.historyCard} key={index}>
-                    <span className={styles.historyNum}>
-                      {order.seatNumber || "?"}席#{order.orderNumber}
-                    </span>
-                    <span className={styles.historyTime}>
-                      {new Date(order.createdAt).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}{" "}
-                      注文
-                    </span>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </div>
+        <HistoryModal
+          history={myHistory}
+          onClose={() => setIsHistoryModalOpen(false)}
+        />
       )}
     </>
   );
