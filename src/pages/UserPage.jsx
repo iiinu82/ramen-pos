@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./UserPage.module.css";
+// import styles from "./UserPage2.module.css";
 import { useSearchParams } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -7,6 +7,8 @@ import { initialMenus } from "../data/menu";
 import HistoryModal from "../components/HistoryModal";
 // optionsから中身だけを取り出す関数と、商品とオプションと個数を渡して小計を出す関数
 import { calculateTotal, flattenOptions } from "../utils/price";
+import stylesOld from "./UserPage.module.css";
+import stylesNew from "./UserPage2.module.css";
 
 const TABS = [
   { id: "all", label: "すべて" },
@@ -15,7 +17,8 @@ const TABS = [
   { id: "drink", label: "ドリンク" },
 ];
 
-export default function UserPage() {
+export default function UserPage({ useNewDesign }) {
+  const styles = useNewDesign ? stylesNew : stylesOld;
   const [activeTab, setActiveTab] = useState("all");
   const [currentStep, setCurrentStep] = useState("select");
   const [cart, setCart] = useState([]);
@@ -495,6 +498,7 @@ export default function UserPage() {
         <HistoryModal
           history={myHistory}
           onClose={() => setIsHistoryModalOpen(false)}
+          useNewDesign={useNewDesign}
         />
       )}
     </>
