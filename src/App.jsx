@@ -15,10 +15,8 @@ function App() {
           alignContent: "flex-start",
         }}
       >
-        <span className="font-bold">POSシステム開発用ナビ:</span>
-        <Link to="/" className="hover:underline">
-          顧客用 (/)
-        </Link>
+        <span>POSシステム開発用ナビ:</span>
+        <Link to="/">顧客用 (/)</Link>
         <span>席シミュ:</span>
         <Link to="/?seat=1" style={{ color: "#0066cc" }}>
           1番席
@@ -35,12 +33,8 @@ function App() {
         <Link to="/?seat=5" style={{ color: "#0066cc" }}>
           5番席
         </Link>
-        <Link to="/kitchen" className="hover:underline">
-          キッチン (/kitchen)
-        </Link>
-        <Link to="/display" className="hover:underline">
-          ディスプレイ (/display)
-        </Link>
+        <Link to="/kitchen">キッチン (/kitchen)</Link>
+        <Link to="/display">ディスプレイ (/display)</Link>
       </nav>
 
       {/* ルーティング設定 */}

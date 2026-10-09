@@ -304,12 +304,10 @@ export default function KitchenPage() {
                 historyOrders.map((order) => (
                   <div className={styles.historyItem} key={order.id}>
                     <div className={styles.historyMenu}>
-                      <span className="font-bold text-lg">
+                      <span>
                         {order.seatNumber || "?"}席#{order.orderNumber}
                       </span>
-                      <span className="ml-4 text-sm text-gray-600">
-                        {order.items.map((i) => i.name).join(", ")}
-                      </span>
+                      <span>{order.items.map((i) => i.name).join(", ")}</span>
                     </div>
                     <div className={styles.historyState}>
                       {order.status === "completed" ? (

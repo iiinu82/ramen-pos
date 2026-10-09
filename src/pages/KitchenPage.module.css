@@ -4,7 +4,7 @@
   width: 1330px;
   height: 100vh;
   margin: 0 auto;
-  background-color: #ffffd3;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4ecf7 100%);
 }
 
 .header {
@@ -16,21 +16,24 @@
 .title {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: #047857;
 }
 
 .orderDisplay {
   width: 100%;
   max-height: calc(100% - 60px);
   display: flex;
+  gap: 10px;
   justify-content: center;
-  background-color: white;
 }
 .cookArea {
   flex: 50%;
   max-height: 100%;
-  background-color: #0aceff;
-  padding: 10px 20px;
+  background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fed7aa;
+  border-radius: 16px;
+  padding: 10px 10px;
+  box-shadow: 0 4px 12px rgba(194, 65, 12, 0.08);
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -148,9 +151,11 @@
 .readyArea {
   flex: 50%;
   max-height: 100%;
-  background-color: #ff0f0f;
+  background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1px solid #a7f3d0;
+  border-radius: 16px;
   flex-shrink: 0;
-  padding: 10px 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -168,7 +173,7 @@
 }
 
 .orderMenuInfo {
-  width: 430px;
+  width: 450px;
   display: flex;
   gap: 20px;
   padding: 5px 10px;
