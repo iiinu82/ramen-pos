@@ -1,7 +1,7 @@
 import React from "react";
 // import styles from "./HistoryModal.module.css";
 // import styles from "../pages/UserPage2.module.css";
-import stylesOld from "./historyModal.module.css";
+import stylesOld from "./HistoryModal.module.css";
 import stylesNew from "../pages/UserPage2.module.css";
 function HistoryModal({ history, onClose, useNewDesign }) {
   const styles = useNewDesign ? stylesNew : stylesOld;
