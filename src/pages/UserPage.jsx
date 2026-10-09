@@ -5,6 +5,8 @@ import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { initialMenus } from "../data/menu";
 import HistoryModal from "../components/HistoryModal";
+// optionsから中身だけを取り出す関数と、商品とオプションと個数を渡して小計を出す関数
+import { calculateTotal, flattenOptions } from "../utils/price";
 
 const TABS = [
   { id: "all", label: "すべて" },
@@ -85,19 +87,9 @@ export default function UserPage() {
   // カートに追加する関数（オプション・個数を反映してキッチン文字列も作る）
   const handleAddToCartFromModal = () => {
     if (!selectedProduct) return;
+    const optList = flattenOptions(selectedOptions);
 
-    let optList = [];
-    Object.values(selectedOptions).forEach((val) => {
-      // 配列（複数選択）ならばそれぞれ入れる。単一（ラジオボタン）ならばそのまま入れる
-      if (Array.isArray(val)) {
-        val.forEach((v) => optList.push(v));
-      } else if (val) {
-        optList.push(val);
-      }
-    });
-
-    let extraPrice = optList.reduce((sum, opt) => sum + (opt.price || 0), 0);
-    const itemTotalPrice = (selectedProduct.price + extraPrice) * quantity;
+    const itemTotalPrice = calculateTotal(selectedProduct, optList, quantity);
 
     const optionLabels = optList
       .map((opt) => opt.label)
@@ -140,15 +132,15 @@ export default function UserPage() {
       const orderItems = cart.map((item) => ({
         productId: item.productId,
         name: item.name,
-        shortName: item.shortName, // ← 略称を追加！
-        thumbnail: item.imageUrl, // 画像パス
+        shortName: item.shortName,
+        thumbnail: item.imageUrl,
         imageUrl: item.imageUrl,
         price: item.price,
-        quantity: item.quantity, // 個数を追加！
-        totalPrice: item.totalPrice, // 小計金額を追加！
-        selectedOptions: item.selectedOptions, // 選んだオプションを追加！
-        optionLabels: item.optionLabels, // オプションのラベルを追加！
-        kitchenDisplayString: item.kitchenDisplayString, // キッチン用文字列を追加！
+        quantity: item.quantity,
+        totalPrice: item.totalPrice,
+        selectedOptions: item.selectedOptions,
+        optionLabels: item.optionLabels,
+        kitchenDisplayString: item.kitchenDisplayString,
         isCompleted: false,
       }));
 
@@ -195,24 +187,13 @@ export default function UserPage() {
     }
   };
 
-  // --- モーダル内で選ばれているオプションと個数から、現在の合計金額を計算する ---
+  // モーダル内で選ばれているオプションと個数から、現在の合計金額を計算する
   const calculateModalTotalPrice = () => {
     if (!selectedProduct) return 0;
 
-    let optList = [];
-    Object.values(selectedOptions).forEach((val) => {
-      if (Array.isArray(val)) {
-        val.forEach((v) => optList.push(v));
-      } else if (val) {
-        optList.push(val);
-      }
-    });
+    const optList = flattenOptions(selectedOptions);
 
-    // オプションの追加料金の合計
-    let extraPrice = optList.reduce((sum, opt) => sum + (opt.price || 0), 0);
-
-    // （基準価格 ＋ オプション追加料金） × 個数
-    return (selectedProduct.price + extraPrice) * quantity;
+    return calculateTotal(selectedProduct, optList, quantity);
   };
 
   const currentTotalPrice = calculateModalTotalPrice();
@@ -257,7 +238,7 @@ export default function UserPage() {
                 注文履歴
               </button>
             </div>
-            {/* カテゴリタブのボタン群 */}
+            {/* カテゴリタブ */}
             <div className={styles.tabArea}>
               {TABS.map((tab) => (
                 <button
@@ -285,12 +266,6 @@ export default function UserPage() {
                       className={styles.thumbnail}
                     />
                     <div className={styles.menuTitle}>{item.name}</div>
-                    {/* <button
-                      className={styles.addCart}
-                      onClick={() => handleAddToCart(item)}
-                    >
-                      カートに入れる
-                    </button> */}
                     <div className={styles.menuPrice}>¥{item.price}</div>
                   </div>
                 ))}
