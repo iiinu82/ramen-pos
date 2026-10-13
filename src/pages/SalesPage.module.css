@@ -1,0 +1,253 @@
+/* =========================================================================
+   SalesPage.module.css  ―  売上ページ ＋ パスワード入力（PasswordGate）
+
+   事務用のページなので、飾りは最小限。数字が読みやすいことを優先する。
+   ・白いパネルを画面の中央に置く（背景が白でもグレーでも崩れない）
+   ・数字は右寄せ・桁がそろう表示
+   ========================================================================= */
+
+/* ---- 売上ページ全体 ---- */
+.page {
+  box-sizing: border-box;
+  max-width: 760px;
+  margin: 24px auto;
+  padding: 24px;
+  background-color: #fff;
+  color: #1f2933;
+  border: 1px solid #d9dee4;
+  border-radius: 8px;
+}
+
+.title {
+  margin: 0 0 20px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ---- 日付の選択 ---- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-bottom: 20px;
+}
+
+.modeTabs {
+  display: flex;
+  gap: 6px;
+}
+
+.modeBtn {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #172a46;
+  background-color: #fff;
+  border: 1px solid #172a46;
+  border-radius: 6px;
+}
+
+.modeBtnActive {
+  color: #fff;
+  background-color: #172a46;
+}
+
+.dateLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.dateInput {
+  min-height: 40px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 16px; /* 16px未満だと、iPhoneで入力時に画面が拡大される */
+  color: inherit;
+  border: 1px solid #aeb6bf;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+/* ---- 集計の数字（4つ） ---- */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background-color: #f3f5f7;
+  border-radius: 6px;
+}
+
+.summaryLabel {
+  font-size: 13px;
+  color: #616e7c;
+}
+
+.summaryValue {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- 商品別の見出しとCSVボタン ---- */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+/* 他のCSSに書かれた h2 の指定（中央寄せなど）に負けないよう、ここで明示する */
+.sectionTitle {
+  margin: 0;
+  text-align: left;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.csvButton {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background-color: #172a46;
+  border: none;
+  border-radius: 6px;
+}
+
+.csvButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---- 商品別の表 ---- */
+.tableWrap {
+  overflow-x: auto; /* 狭い画面では、表だけ横にスクロールする */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.table th,
+.table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e4e8ec;
+}
+
+.table th {
+  font-size: 13px;
+  font-weight: 700;
+  color: #616e7c;
+  background-color: #f3f5f7;
+  white-space: nowrap;
+}
+
+.table td.num,
+.table th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- メッセージ（読み込み中・データなし） ---- */
+.message {
+  margin: 24px 0;
+  font-size: 14px;
+  color: #616e7c;
+}
+
+/* =========================================================================
+   パスワード入力（PasswordGate）
+   ========================================================================= */
+.gate {
+  display: flex;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.gateForm {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(100%, 320px);
+  padding: 24px;
+  background-color: #fff;
+  color: #1f2933;
+  border: 1px solid #d9dee4;
+  border-radius: 8px;
+}
+
+.gateText {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.gateInput {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 16px;
+  color: inherit;
+  border: 1px solid #aeb6bf;
+  border-radius: 6px;
+}
+
+.gateButton {
+  min-height: 42px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background-color: #172a46;
+  border: none;
+  border-radius: 6px;
+}
+
+.gateError {
+  margin: 0;
+  font-size: 13px;
+  color: #b42318;
+}
+
+/* ---- キーボード操作で、入力欄にも目印を出す ---- */
+.dateInput:focus-visible,
+.gateInput:focus-visible {
+  outline: 3px solid #3d84ff;
+  outline-offset: 1px;
+}
+
+/* ---- 狭い画面（スマホ） ---- */
+@media (max-width: 560px) {
+  .page {
+    margin: 0;
+    padding: 16px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

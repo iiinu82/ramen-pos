@@ -150,6 +150,7 @@ export default function UserPage({ useNewDesign }) {
       const newOrder = {
         seatNumber: seatNumber,
         items: orderItems,
+        totalPrice: cart.reduce((sum, item) => sum + item.totalPrice, 0),
         status: "pending",
         orderNumber: Math.floor(Math.random() * 900) + 100,
         createdAt: serverTimestamp(),

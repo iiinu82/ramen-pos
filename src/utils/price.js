@@ -15,4 +15,15 @@ const calculateTotal = (product, optList, quantity) => {
   return (product.price + extraPrice) * quantity;
 };
 
-export { flattenOptions, calculateTotal };
+const calculateItemTotal = (item) =>
+  item.totalPrice || item.price * (item.quantity || 1);
+
+const calculateOrderTotal = (items) =>
+  items.reduce((sum, item) => sum + calculateItemTotal(item), 0);
+
+export {
+  flattenOptions,
+  calculateTotal,
+  calculateItemTotal,
+  calculateOrderTotal,
+};

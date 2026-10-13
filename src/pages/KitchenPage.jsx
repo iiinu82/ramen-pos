@@ -8,6 +8,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
+import { calculateOrderTotal } from "../utils/price";
 
 export default function KitchenPage() {
   const [orders, setOrders] = useState([]);
@@ -58,15 +59,21 @@ export default function KitchenPage() {
 
   // 「受け渡し完了」ボタンを押したとき（statusをcompletedにして履歴で読み取れるようにする）
   const [finishingIds, setFinishingIds] = useState([]); // ボタンを赤く光らせるためのState
-  const handleCompleteOrder = (orderId) => {
-    // まずボタンを赤く光らせる（完了状態の見た目にする）
-    setFinishingIds((prev) => [...prev, orderId]);
 
-    // 1.5秒後にステータスを "completed" に更新して画面から消す
+  // 会計終了して履歴に入れる
+  const handleCompleteOrder = (order) => {
+    setFinishingIds((prev) => [...prev, order.id]);
+
+    const totalPrice = calculateOrderTotal(order.items);
+
     setTimeout(async () => {
-      const orderRef = doc(db, "orders", orderId);
-      await updateDoc(orderRef, { status: "completed" });
-      setFinishingIds((prev) => prev.filter((id) => id !== orderId));
+      const orderRef = doc(db, "orders", order.id);
+      await updateDoc(orderRef, {
+        status: "completed",
+        finishedAt: serverTimestamp(),
+        totalPrice,
+      });
+      setFinishingIds((prev) => prev.filter((id) => id !== order.id));
     }, 1500);
   };
 
@@ -103,7 +110,10 @@ export default function KitchenPage() {
       try {
         const orderRef = doc(db, "orders", orderId);
         // ステータスを "cancelled" に更新する
-        await updateDoc(orderRef, { status: "cancelled" });
+        await updateDoc(orderRef, {
+          status: "cancelled",
+          cancelledAt: serverTimestamp(),
+        });
         console.log(`注文 #${orderNumber} をキャンセルしました`);
       } catch (e) {
         console.error("キャンセルの更新に失敗しました: ", e);
@@ -201,11 +211,7 @@ export default function KitchenPage() {
             const isFinishing = finishingIds.includes(order.id);
 
             // 注文全体の合計金額を計算
-            const orderTotalPrice = order.items.reduce(
-              (sum, item) =>
-                sum + (item.totalPrice || item.price * (item.quantity || 1)),
-              0,
-            );
+            const orderTotalPrice = calculateOrderTotal(order.items);
 
             return (
               <div className={styles.orderCard} key={order.id}>
@@ -271,7 +277,7 @@ export default function KitchenPage() {
                     className={`${styles.finishBtn} ${
                       isFinishing ? styles.finishingRed : ""
                     }`}
-                    onClick={() => handleCompleteOrder(order.id)}
+                    onClick={() => handleCompleteOrder(order)}
                   >
                     {isFinishing ? "会計完了" : "未会計"}
                   </button>
@@ -307,7 +313,20 @@ export default function KitchenPage() {
                       <span>
                         {order.seatNumber || "?"}席#{order.orderNumber}
                       </span>
-                      <span>{order.items.map((i) => i.name).join(", ")}</span>
+                      <span>
+                        {order.items
+                          .map(
+                            (i) => `${i.kitchenDisplayString} ×${i.quantity}`,
+                          )
+                          .join(", ")}
+                      </span>
+                      <span>
+                        ¥{" "}
+                        {(
+                          order.totalPrice ||
+                          order.price * (order.quantity || 1)
+                        ).toLocaleString()}
+                      </span>
                     </div>
                     <div className={styles.historyState}>
                       {order.status === "completed" ? (
